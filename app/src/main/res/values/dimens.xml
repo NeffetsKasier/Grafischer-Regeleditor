@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textsize">18sp</dimen>
+    <dimen name="textsize_smaller">16sp</dimen>
+    <dimen name="shape_corner">3dp</dimen>
+    <!--Dialog Maße-->
+    <dimen name="dialog_input_margin">4dp</dimen>
+    <dimen name="dialog_width">600dp</dimen>
+
+    <!--Verhindert, dass Dropdown hinter Tastatur verschwindet-->
+    <dimen name="dropdown_height">200dp</dimen>
+
+    <!--Seiten Maße aus Guidelines-->
+    <dimen name="site_padding">16dp</dimen>
+    <dimen name="big_padding">30dp</dimen>
+
+    <!--Buttons-->
+    <dimen name="bt_ic_padding">5dp</dimen>
+    <dimen name="bt_width">250dp</dimen>
+    <dimen name="bt_height">50dp</dimen>
+
+    <!-- Buttons Startseite -->
+    <dimen name="bt_start_textsize">16sp</dimen>
+    <dimen name="bt_start_width">450dp</dimen>
+    <dimen name="bt_start_height">140dp</dimen>
+    <dimen name="bt_start_margin_edge">100dp</dimen>
+    <dimen name="bt_start_margin_center">30dp</dimen>
+
+    <!--Service Bricks-->
+    <dimen name="sb_width">300dp</dimen>
+    <!--Drag&Drop-->
+    <dimen name="dad_margin">30dp</dimen>
+    <dimen name="dad_height">120dp</dimen>
+    <dimen name="dad_corner">5dp</dimen>
+    <dimen name="dad_dash">5dp</dimen>
+    <dimen name="dad_width">1dp</dimen>
+
+
+</resources>

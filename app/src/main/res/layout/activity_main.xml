@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/site_padding"
+    >
+
+
+    <!--Regel erstellen Button-->
+    <Button android:text="@string/dialog_title_new_rule"
+        android:id="@+id/bt_create_rule"
+        android:drawableStart="@drawable/ic_add_black_large"
+        android:textSize="@dimen/bt_start_textsize"
+        android:layout_marginStart="@dimen/bt_start_margin_edge"
+        android:layout_marginEnd="@dimen/bt_start_margin_center"
+        android:padding="@dimen/big_padding"
+        android:layout_width="@dimen/bt_start_width"
+        android:layout_height="@dimen/bt_start_height"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_weight="1"
+     />
+
+    <!--Regel Bearbeiten Button-->
+    <Button android:text="@string/dialog_title_edit_rule"
+        android:id="@+id/bt_edit_rule"
+        android:drawableStart="@drawable/ic_edit_black"
+        android:textSize="@dimen/bt_start_textsize"
+        android:layout_marginStart="@dimen/bt_start_margin_center"
+        android:layout_marginEnd="@dimen/bt_start_margin_edge"
+        android:padding="@dimen/big_padding"
+        android:layout_width="@dimen/bt_start_width"
+        android:layout_height="@dimen/bt_start_height"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_weight="1"
+    />
+
+</LinearLayout>

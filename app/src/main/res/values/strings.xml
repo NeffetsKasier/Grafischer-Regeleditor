@@ -1,0 +1,73 @@
+<resources>
+    <!--Main Strings-->
+    <string name="app_name">Grafischer Regeleditor</string>
+    <string name="general_term_service">Service</string>
+    <string name="general_term_rule">Regel</string>
+    <string name="general_term_rule_title">Regelname</string>
+    <string name="dropdown_autocomplete_hint_show_options">Zeige Optionen</string>
+
+    <!-- Toast Hint Strins-->
+    <string name="toast_phrase_was_created">wurde angelegt</string>
+    <string name="toast_phrase_now_editable">kann nun bearbeitet werden</string>
+    <string name="toast_hint_check_inputs">Eingaben überprüfen</string>
+    <string name="toast_hint_selection_aborted">Auswahl wurde abgebrochen</string>
+    <string name="toast_hint_selection_saved">Auswahl wurde gespeichert</string>
+    <string name="toast_hint_input_aborted">Eingabe wurde abgebrochen</string>
+    <string name="toast_hint_input_saved">Eingabe wurden gespeichert</string>
+    <string name="toast_hint_was_deleted">wurde gelöscht</string>
+
+    <!--Button Strings-->
+    <string name="button_back">Zurück</string>
+    <string name="button_next">Weiter</string>
+    <string name="button_cancel">Abbrechen</string>
+    <string name="button_ok">Ok</string>
+    <string name="button_generate_rule">Regel generieren</string>
+
+
+    <string name="dialog_title_delete_rule">Regel löschen</string>
+    <string name="dialog_text_delete_rule">Diese Regel wirklich löschen?</string>
+
+    <!--Settings Strings-->
+    <string name="dialog_title_settings">Einstellungen</string>
+    <string name="input_openhab_ip">IPv4-Adresse des Gateways</string>
+    <string name="input_openhab_user">Anmeldename</string>
+    <string name="input_openhab_password">Passwort</string>
+    <string name="input_err_openhab_ip">Gültige IPv4-Adresse des Gateways eingeben (0.0.0.0)</string>
+    <string name="input_err_openhab_user">Gültigen Anmeldename für Gateway eingeben (min. 3 Zeichen: {A-Za-z._-})</string>
+    <string name="input_err_openhab_password">Gültiges Passwort für Gateway eingeben (min. 3 Zeichen)</string>
+
+    <!--Create Rule Strings-->
+    <string name="dialog_title_new_rule">Neue Regel erstellen</string>
+    <string name="input_select_or_enter_service">Neuen Service anlegen oder aus Vorhandenen wählen</string>
+    <string name="toast_input_success_new_service">Neuer Service</string>
+    <string name="input_enter_rulename">Eindeutige Regelbezeichnung eingeben</string>
+    <string name="input_err_enter_rulename">Regelbezeichnung muss min. 3 Zeichen haben {A-Za-z._-})</string>
+    <string name="input_err_unique_enter_rulename">Regelbezeichnung muss eindeutig sein</string>
+    <!--<string name="select_or_enter_service_err">Servicebezeichnung muss min. 3 Zeichen haben. {A-Za-z._-})</string>-->
+
+    <!--Select Rule Strings-->
+    <string name="dialog_title_edit_rule">Regel ansehen / bearbeiten</string>
+    <string name="input_select_rule">Regel auswählen</string>
+    <string name="input_select_service">Service auswählen</string>
+    <string name="input_err_select_rule">Regel muss ausgewählt werden</string>
+    <string name="input_err_select_service">Service muss zuerst ausgewählt werden</string>
+
+    <!--Edit Rule Strings-->
+    <string name="icon_hint_delete_rule">Regel löschen</string>
+    <string name="dropdown_filter_by_group">Nach Gruppe filtern</string>
+    <string name="button_or">Oder</string>
+    <string name="switch_rule_active">Regel aktiv</string>
+    <string name="title_precondition_or">\tOder …</string>
+    <string name="title_precondition_if"><b>Wenn …</b></string>
+    <string name="title_action_frame"><b>Dann tu dies …</b></string>
+    <string name="frame_description_action">Gerät, welches eine Aktion <b><u>ausführen</u></b> soll,\n per Drag &amp; Drop einfügen</string>
+    <string name="frame_description_precondition">Gerät, welches eine Aktion <b><u>auslösen</u></b> soll,\n per Drag &amp; Drop einfügen</string>
+    <string name="frame_description_more_actions">Weiteres Gerät zur\n Aktion hinzufügen</string>
+    <string name="frame_description_more_preconditions">Weiteres Gerät zur\n Bedingung hinzufügen</string>
+    <string name="dialog_select_action">Aktion wählen</string>
+    <string name="dialog_hint_no_action">Gerät kann leider keine Aktion ausführen</string>
+    <string name="dialog_select_trigger">Bedingung wählen</string>
+    <string name="dialog_hint_no_trigger">Gerät kann leider nicht als Bedingung verwendet werden</string>
+    <string name="dialog_select_operator">Operator wählen</string>
+</resources>
+

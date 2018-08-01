@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/site_padding">
+    <LinearLayout
+        android:id="@+id/show_color"
+        android:layout_width="match_parent"
+        android:background="@color/colorWhite"
+        android:layout_height="30dp"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/show_color_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="(255,255,255)"
+            android:textSize="@dimen/textsize"/>
+    </LinearLayout>
+    <!--<TextView
+        android:id="@+id/labelA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <SeekBar
+        android:id="@+id/seekA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/labelA"
+        android:layout_toRightOf="@id/labelA"
+        android:max="255"
+        android:progress="255" />-->
+    <TextView
+        android:id="@+id/labelR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/show_color"
+        android:layout_marginTop="@dimen/bt_ic_padding"
+        android:text="R"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <SeekBar
+        android:id="@+id/seekbar_r"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/labelR"
+        android:layout_toRightOf="@+id/labelR"
+        android:layout_marginTop="@dimen/bt_ic_padding"
+        android:max="255"
+        android:progress="255" />
+    <TextView
+        android:id="@+id/labelG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/labelR"
+        android:layout_marginTop="@dimen/bt_ic_padding"
+        android:text="G"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <SeekBar
+        android:id="@+id/seekbar_g"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/labelG"
+        android:layout_below="@+id/seekbar_r"
+        android:layout_toRightOf="@+id/labelG"
+        android:layout_marginTop="@dimen/bt_ic_padding"
+        android:max="255"
+        android:progress="255" />
+    <TextView
+        android:id="@+id/labelB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/labelG"
+        android:layout_marginTop="@dimen/bt_ic_padding"
+        android:text="B"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <SeekBar
+        android:id="@+id/seekbar_b"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/labelB"
+        android:layout_below="@+id/seekbar_g"
+        android:layout_toRightOf="@+id/labelB"
+        android:layout_marginTop="@dimen/bt_ic_padding"
+        android:max="255"
+        android:progress="255" />
+</RelativeLayout>

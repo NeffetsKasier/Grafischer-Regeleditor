@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Layout für Settings-Dialog-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="@dimen/dialog_width"
+    android:layout_height="match_parent"
+    android:padding="@dimen/site_padding"
+    >
+
+    <!--Gateway IP-->
+    <!--TextInputLayout definiert Platz für Input Label und Errormessage-->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_openhab_ip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--Input-Feld für IP Eingabe-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/input_openhab_ip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dialog_input_margin"
+            android:layout_weight="1"
+            android:hint="@string/input_openhab_ip"
+            android:inputType="textVisiblePassword"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <!--Gateway User-->
+    <!--TextInputLayout definiert Platz für Input Label und Errormessage-->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_openhab_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--Input-Feld für Anmeldename Eingabe-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/input_openhab_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/dialog_input_margin"
+            android:hint="@string/input_openhab_user"
+            android:inputType="textVisiblePassword"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <!--Gateway Passwort-->
+    <!--TextInputLayout definiert Platz für Input Label und Errormessage-->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_openhab_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--Input-Feld für Passwort Eingabe-->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/input_openhab_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/dialog_input_margin"
+            android:hint="@string/input_openhab_password"
+            android:inputType="textPassword"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+</LinearLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/brick_function"
+    android:textColor="@color/colorBlack"
+    android:textSize="@dimen/textsize"
+    android:padding="@dimen/site_padding"
+    android:layout_width="fill_parent"
+    android:drawableRight="@drawable/ic_arrow_right_black"
+    android:singleLine="true"
+    android:gravity="left"
+    android:layout_height="wrap_content">
+</TextView>

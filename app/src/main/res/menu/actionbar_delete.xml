@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Erstellt View, um Settings-Icon der Actionbar hinzuzufügen-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/bt_delete_rule"
+        android:title="@string/dialog_title_delete_rule"
+        android:icon="@drawable/ic_delete_white"
+        app:showAsAction="always"/>
+</menu>

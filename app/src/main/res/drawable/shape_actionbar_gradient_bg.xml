@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Generiert Background der Actionbar mit Farbverlauf  -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <gradient android:angle="90"
+                android:startColor="@color/colorDark"
+                android:centerColor="@color/colorDarkest"
+                android:endColor="@color/colorDark"
+                 />
+        </shape>
+
+    </item>
+</selector>

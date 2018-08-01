@@ -1,0 +1,30 @@
+<resources>
+    <style name="AppTheme" parent="CustomAppTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="CustomAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/CustomActionBar</item>
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/CustomActionBar</item>
+    </style>
+
+    <style name="AutocompleteGroup" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:background">@color/colorDarkest</item>
+        <item name="android:textColorHint">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="CustomActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@drawable/shape_actionbar_gradient_bg</item>
+        <!-- Support library compatibility -->
+        <item name="background">@drawable/shape_actionbar_gradient_bg</item>
+    </style>
+
+
+
+</resources>

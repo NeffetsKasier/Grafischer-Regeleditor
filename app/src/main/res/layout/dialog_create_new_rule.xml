@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Layout für Dialog Regel erstellen - Schritt 1: Auswahl/Erstellung des Regelsets bzw Services-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="@dimen/dialog_width"
+    android:layout_height="match_parent"
+    android:padding="@dimen/site_padding"
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!--Input-Feld für Service Auswahl oder Eingabe-->
+        <android.support.v7.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/input_selectOrEnterService"
+            android:hint="@string/input_select_or_enter_service"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scrollbars="vertical"
+            android:dropDownHeight="@dimen/dropdown_height"
+            />
+
+        <ImageView
+            android:id="@+id/bt_dropDownSelector"
+            android:src="@drawable/ic_arrow_drop_down_black"
+            android:contentDescription="@string/dropdown_autocomplete_hint_show_options"
+            android:padding="@dimen/bt_ic_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+    <!--Input-Feld für Service Auswahl oder Eingabe-->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayout_enterRulename"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/input_enterRulename"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dialog_input_margin"
+            android:layout_weight="1"
+            android:hint="@string/input_enter_rulename"
+            android:inputType="textVisiblePassword"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+
+
+</LinearLayout>

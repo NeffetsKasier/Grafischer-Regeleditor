@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/frame_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorDarkest"
+        android:textSize="@dimen/textsize"/>
+    <LinearLayout
+        android:id="@+id/frame_box"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dad_height"
+        android:layout_marginStart="@dimen/dad_margin"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="@dimen/site_padding"
+        android:background="@drawable/shape_dropfield_rectangle_normal">
+        <LinearLayout
+            android:id="@+id/frame_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"            >
+            <TextView
+                android:id="@+id/frame_description_text"
+                android:textColor="@color/colorBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textsize_smaller"
+                android:gravity="center"/>
+            <ImageView
+                android:id="@+id/frame_description_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/bt_ic_padding"
+                android:src="@drawable/ic_add_black"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Layout für Dialog Regel auswählen -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dialog_width"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/site_padding">
+
+    <!--Service Auswahl-->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!--Autocomplete-Feld für Service Auswahl-->
+        <android.support.v7.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/input_selectService"
+            android:hint="@string/input_select_service"
+            android:textColor="@color/colorDarkest"
+            android:enabled="false"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scrollbars="vertical"
+            android:dropDownHeight="@dimen/dropdown_height"/>
+        <!-- Icon für dropdown Selector-->
+        <ImageView
+            android:id="@+id/bt_dropDownServiceSelector"
+            android:src="@drawable/ic_arrow_drop_down_black"
+            android:contentDescription="@string/dropdown_autocomplete_hint_show_options"
+            android:padding="@dimen/bt_ic_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!--Regel Auswahl-->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!--Autocomplete-Feld für Regel Auswahl-->
+        <android.support.v7.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/input_selectRule"
+            android:hint="@string/input_select_rule"
+            android:textColor="@color/colorDarkest"
+            android:enabled="false"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scrollbars="vertical"
+            android:dropDownHeight="@dimen/dropdown_height"/>
+        <!-- Icon für dropdown Selector-->
+        <ImageView
+            android:id="@+id/bt_dropDownRuleSelector"
+            android:src="@drawable/ic_arrow_drop_down_black"
+            android:contentDescription="@string/dropdown_autocomplete_hint_show_options"
+            android:padding="@dimen/bt_ic_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+</LinearLayout>

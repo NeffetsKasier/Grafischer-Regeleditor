@@ -149,11 +149,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return getService(id);
     }
-    public void deleteService(Service service) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM "+ TABLE_SERVICE+" WHERE "+KEY_ID+" = "+service.getId());
-        db.close();
-    }
+
     public Service getService(long service_id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT  * FROM " + TABLE_SERVICE + " WHERE "
@@ -185,10 +181,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         c.close();
         return services;
     }
+    public void deleteService(Service service) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM "+ TABLE_SERVICE+" WHERE "+KEY_ID+" = "+service.getId());
+        db.close();
+    }
     public void deleteAllServices() {
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL("DELETE FROM "+ TABLE_SERVICE);
         db.close();
+    }
+    public void deleteEmptyServices() {
+        ArrayList<Service> services = getAllServices();
+        for(Service s:services){
+            ArrayList<Rule> rules = getAllRulesInService(s.getId());
+            if(rules.isEmpty())
+                deleteService(s);
+        }
     }
 
     ///////////////////////////////////////////CRUD Operations for RULE/////////////////////////////
@@ -272,9 +281,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public void deleteAllRules() {
         SQLiteDatabase db = this.getReadableDatabase();
-        ArrayList<Rule> rules = getAllRules();
-        for(Rule r:rules)
-            deleteRule(r);
+        db.execSQL("DELETE FROM "+ TABLE_RULE);
         db.close();
     }
 

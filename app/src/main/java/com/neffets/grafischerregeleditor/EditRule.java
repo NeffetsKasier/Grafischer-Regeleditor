@@ -37,6 +37,10 @@ import com.neffets.grafischerregeleditor.db_modell.Operator;
 import com.neffets.grafischerregeleditor.db_modell.Precondition;
 import com.neffets.grafischerregeleditor.db_modell.Rule;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -130,14 +134,30 @@ public class EditRule extends AppCompatActivity implements Serializable{
                     Toast.makeText(getApplicationContext(),"Es muss mindestens eine Aktion geben",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Intent intent = new Intent(getApplicationContext(), ShowRule.class);
-                intent.putExtra("Rule",selected_rule);
-                startActivity(intent);
+                upload_service_file();
+               // Intent intent = new Intent(getApplicationContext(), ShowRule.class);
+                // intent.putExtra("Rule",selected_rule);
+                // startActivity(intent);
             }
         });
 
     }
 
+    //Delete Icon der Actionbar hinzufügen
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.actionbar_delete,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.bt_delete_rule:
+                showDialog_DeleteRule();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     public void getFunctionsFromDb() {
         precondition_view = findViewById(R.id.precondition_view);
@@ -159,8 +179,7 @@ public class EditRule extends AppCompatActivity implements Serializable{
 
         }
     }
-
-   public void getActionsFromDb(){
+    public void getActionsFromDb(){
         action_view = findViewById(R.id.action_view);
 
        LinearLayout frame_layout = createFrameLayout(getText(R.string.title_action_frame),"Action",getText(R.string.frame_description_action));
@@ -171,19 +190,6 @@ public class EditRule extends AppCompatActivity implements Serializable{
             addBrickFunctionToFrame(a,frame_box);
         }
 
-    }
-
-    public void addNewFrame(){
-        ArrayList<Frame> frame_array = db.getAllFrames(selected_rule.getId());
-        for(Frame f: frame_array){
-            ArrayList<Precondition> preconditions_array = db.getAllPreconditions(f.getId());
-            if(preconditions_array.isEmpty()){
-                Toast.makeText(getApplicationContext(),"Es darf keine Bedingung leer sein",Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-        Frame new_frame = db.addFrame(new Frame(selected_rule));
-        precondition_view.addView(createFrameLayout(getText(R.string.title_precondition_or),"Precondition_"+new_frame.getId(),getText(R.string.frame_description_precondition)));
     }
 
     public LinearLayout createFrameLayout(CharSequence p_frame_title, CharSequence p_frame_tag, CharSequence p_frame_description) {
@@ -198,7 +204,18 @@ public class EditRule extends AppCompatActivity implements Serializable{
         frame_box.setOnDragListener(new BrickDragListener());
         return new_frame;
     }
-
+    public void addNewFrame(){
+        ArrayList<Frame> frame_array = db.getAllFrames(selected_rule.getId());
+        for(Frame f: frame_array){
+            ArrayList<Precondition> preconditions_array = db.getAllPreconditions(f.getId());
+            if(preconditions_array.isEmpty()){
+                Toast.makeText(getApplicationContext(),"Es darf keine Bedingung leer sein",Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        Frame new_frame = db.addFrame(new Frame(selected_rule));
+        precondition_view.addView(createFrameLayout(getText(R.string.title_precondition_or),"Precondition_"+new_frame.getId(),getText(R.string.frame_description_precondition)));
+    }
 
     class BrickDragListener implements View.OnDragListener {
         Drawable enterShape = getDrawable(R.drawable.shape_dropfield_rectangle_highlight);
@@ -230,7 +247,55 @@ public class EditRule extends AppCompatActivity implements Serializable{
             return true;
         }
     }
-
+    class DeleteOnLongClickListener implements View.OnLongClickListener{
+        public boolean onLongClick(View clicked_brick) {
+            ViewGroup frame_layout = (ViewGroup) clicked_brick.getParent();
+            String frame_tag = frame_layout.getTag().toString();
+            if(frame_tag.equals("Action")){
+                Action function = db.getAction(Long.parseLong(clicked_brick.getTag().toString().substring(7)));
+                db.deleteAction(function.getId());
+                frame_layout.removeView(clicked_brick);
+                ArrayList<Action> actions = db.getAllActions(selected_rule.getId());
+                if(actions.isEmpty()){
+                    ViewGroup frame_layout_parent = (ViewGroup) frame_layout.getParent();
+                    LinearLayout frame_description = frame_layout_parent.findViewById(R.id.frame_description);
+                    frame_description.findViewById(R.id.frame_description_icon).setVisibility(View.VISIBLE);
+                    TextView frame_description_text = frame_description.findViewById(R.id.frame_description_text);
+                    frame_description_text.setText(getText(R.string.frame_description_action));
+                }
+            }else{
+                Precondition function = db.getPrecondition(Long.parseLong(clicked_brick.getTag().toString().substring(13)));
+                db.deletePrecondition(function.getId());
+                frame_layout.removeView(clicked_brick);
+                ArrayList<Precondition> preconditions = db.getAllPreconditions(function.getFrame().getId());
+                if (preconditions.isEmpty()){
+                    ArrayList<Frame> frames = db.getAllFrames(selected_rule.getId());
+                    if (frames.size()>1){
+                        db.deleteFrame(function.getFrame().getId());
+                        ViewGroup frame_layout_parent = (ViewGroup) frame_layout.getParent();
+                        ViewGroup frame_layout_grany = (ViewGroup) frame_layout_parent.getParent();
+                        frame_layout_grany.removeView(frame_layout_parent);
+                    }else if(frames.size()==1){
+                        ViewGroup frame_layout_parent = (ViewGroup) frame_layout.getParent();
+                        LinearLayout frame_description = frame_layout_parent.findViewById(R.id.frame_description);
+                        frame_description.findViewById(R.id.frame_description_icon).setVisibility(View.VISIBLE);
+                        TextView frame_description_text = frame_description.findViewById(R.id.frame_description_text);
+                        frame_description_text.setText(getText(R.string.frame_description_precondition));
+                    }
+                }else {
+                    ArrayList<Precondition> preconditions_in_frame = db.getAllPreconditions(function.getFrame().getId());
+                    if(preconditions_in_frame.isEmpty()){
+                        ViewGroup frame_layout_parent = (ViewGroup) frame_layout.getParent();
+                        LinearLayout frame_description = frame_layout_parent.findViewById(R.id.frame_description);
+                        frame_description.findViewById(R.id.frame_description_icon).setVisibility(View.VISIBLE);
+                        TextView frame_description_text = frame_description.findViewById(R.id.frame_description_text);
+                        frame_description_text.setText(getText(R.string.frame_description_precondition));
+                    }
+                }
+            }
+            return true;
+        }
+    }
     public void addBrickFunctionToFrame(Action function, LinearLayout frameLayout){
         LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
         View newBrick = layoutInflater.inflate(R.layout.linearlayout_brick, null);
@@ -295,72 +360,6 @@ public class EditRule extends AppCompatActivity implements Serializable{
         Toast.makeText(getApplicationContext(),"Gerät durch langen Klick entfernen",Toast.LENGTH_SHORT).show();
     }
 
-    class DeleteOnLongClickListener implements View.OnLongClickListener{
-        public boolean onLongClick(View clicked_brick) {
-            ViewGroup frame_layout = (ViewGroup) clicked_brick.getParent();
-            String frame_tag = frame_layout.getTag().toString();
-            if(frame_tag.equals("Action")){
-                Action function = db.getAction(Long.parseLong(clicked_brick.getTag().toString().substring(7)));
-                db.deleteAction(function.getId());
-                frame_layout.removeView(clicked_brick);
-                ArrayList<Action> actions = db.getAllActions(selected_rule.getId());
-                if(actions.isEmpty()){
-                    ViewGroup frame_layout_parent = (ViewGroup) frame_layout.getParent();
-                    LinearLayout frame_description = frame_layout_parent.findViewById(R.id.frame_description);
-                    frame_description.findViewById(R.id.frame_description_icon).setVisibility(View.VISIBLE);
-                    TextView frame_description_text = frame_description.findViewById(R.id.frame_description_text);
-                    frame_description_text.setText(getText(R.string.frame_description_action));
-                }
-            }else{
-                Precondition function = db.getPrecondition(Long.parseLong(clicked_brick.getTag().toString().substring(13)));
-                db.deletePrecondition(function.getId());
-                frame_layout.removeView(clicked_brick);
-                ArrayList<Precondition> preconditions = db.getAllPreconditions(function.getFrame().getId());
-                if (preconditions.isEmpty()){
-                    ArrayList<Frame> frames = db.getAllFrames(selected_rule.getId());
-                    if (frames.size()>1){
-                        db.deleteFrame(function.getFrame().getId());
-                        ViewGroup frame_layout_parent = (ViewGroup) frame_layout.getParent();
-                        ViewGroup frame_layout_grany = (ViewGroup) frame_layout_parent.getParent();
-                        frame_layout_grany.removeView(frame_layout_parent);
-                    }else if(frames.size()==1){
-                        ViewGroup frame_layout_parent = (ViewGroup) frame_layout.getParent();
-                        LinearLayout frame_description = frame_layout_parent.findViewById(R.id.frame_description);
-                        frame_description.findViewById(R.id.frame_description_icon).setVisibility(View.VISIBLE);
-                        TextView frame_description_text = frame_description.findViewById(R.id.frame_description_text);
-                        frame_description_text.setText(getText(R.string.frame_description_precondition));
-                    }
-                }else {
-                    ArrayList<Precondition> preconditions_in_frame = db.getAllPreconditions(function.getFrame().getId());
-                    if(preconditions_in_frame.isEmpty()){
-                        ViewGroup frame_layout_parent = (ViewGroup) frame_layout.getParent();
-                        LinearLayout frame_description = frame_layout_parent.findViewById(R.id.frame_description);
-                        frame_description.findViewById(R.id.frame_description_icon).setVisibility(View.VISIBLE);
-                        TextView frame_description_text = frame_description.findViewById(R.id.frame_description_text);
-                        frame_description_text.setText(getText(R.string.frame_description_precondition));
-                    }
-                }
-            }
-            return true;
-        }
-    }
-
-    //Delete Icon der Actionbar hinzufügen
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.actionbar_delete,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.bt_delete_rule:
-                showDialog_DeleteRule();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     public void showDialog_DeleteRule(){
         new AlertDialog.Builder(this)
             .setTitle(getString(R.string.dialog_title_delete_rule)+": "+ selected_rule.getName())
@@ -376,6 +375,18 @@ public class EditRule extends AppCompatActivity implements Serializable{
                     Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
                 }})
             .show();
+    }
+
+    public void addNewBrickFunctionToDb(Brick_Function brick_function,String brick_function_value, Operator operator, LinearLayout frameLayout){
+        String frame_tag = frameLayout.getTag().toString();
+        if (frame_tag.equals("Action")){
+            Action action = db.addAction(new Action(selected_rule,brick_function,brick_function_value));
+            addBrickFunctionToFrame(action,frameLayout);
+        }else {
+            Frame pre_frame = db.getFrame(Long.parseLong(frameLayout.getTag().toString().substring(13)));
+            Precondition precondition = db.addPrecondition(new Precondition(brick_function, pre_frame, operator, brick_function_value));
+            addBrickFunctionToFrame(precondition, frameLayout);
+        }
     }
 
     public void show_dialog_choose_function(final Brick brick, final LinearLayout frameLayout) {
@@ -417,7 +428,6 @@ public class EditRule extends AppCompatActivity implements Serializable{
             })
             .show();
     }
-
     public void show_dialog_choose_operator(final Brick_Function brick_function, final LinearLayout frameLayout) {
         final ArrayList<Operator> operators_array = db.getAllOperators();
         String frame_title;
@@ -438,7 +448,6 @@ public class EditRule extends AppCompatActivity implements Serializable{
             })
             .show();
     }
-
     public void show_dialog_function_value(final Brick_Function brick_function, final Operator operator, final LinearLayout frameLayout){
         final String frame_tag, type,frame_title;
         final EditText brick_function_input;
@@ -601,15 +610,177 @@ public class EditRule extends AppCompatActivity implements Serializable{
         }
     }
 
-    public void addNewBrickFunctionToDb(Brick_Function brick_function,String brick_function_value, Operator operator, LinearLayout frameLayout){
-        String frame_tag = frameLayout.getTag().toString();
-        if (frame_tag.equals("Action")){
-            Action action = db.addAction(new Action(selected_rule,brick_function,brick_function_value));
-            addBrickFunctionToFrame(action,frameLayout);
-        }else {
-            Frame pre_frame = db.getFrame(Long.parseLong(frameLayout.getTag().toString().substring(13)));
-            Precondition precondition = db.addPrecondition(new Precondition(brick_function, pre_frame, operator, brick_function_value));
-            addBrickFunctionToFrame(precondition, frameLayout);
+    public String generateRuleString(Rule rule_param){
+
+        String generated_rule_string = "", generated_when = "", generated_if = "", generated_then = "";
+        Boolean firstPrecondition = true, firstAction = true, firstFrame = true, first_if = true;
+        ArrayList<Frame> frames;
+        ArrayList<Action> actions;
+        ArrayList<Precondition> preconditions;
+
+        generated_rule_string = generated_rule_string + "rule '" + rule_param.toString() + "'\n";
+
+        db = new DatabaseHelper(getApplicationContext());
+        generated_when = generated_when + "when\n";
+
+        frames = db.getAllFrames(rule_param.getId());
+        actions = db.getAllActions(rule_param.getId());
+
+        for (Frame f : frames) {
+            preconditions = db.getAllPreconditions(f.getId());
+            if (!preconditions.isEmpty()) {
+                if (firstFrame) {
+                    firstFrame = false;
+                    generated_if = generated_if + "if(";
+                } else {
+                    generated_if = generated_if + " || \n \t";
+                    first_if = true;
+                }
+            }
+            for (Precondition p : preconditions) {
+                if (firstPrecondition) {
+                    firstPrecondition = false;
+                    generated_when = generated_when + "\t";
+                } else {
+                    generated_when = generated_when + " or \n \t";
+
+                }
+                if (first_if) {
+                    first_if = false;
+                } else {
+                    generated_if = generated_if + " && ";
+                }
+
+                String type = p.getBrick_function().getFunction().getType().getName();
+                String value = p.getValue();
+                String openhab_name = p.getBrick_function().getOpenhab_name();
+                String operator = p.getOperator().getCharacter();
+                generated_when = generated_when + " Item " + openhab_name + " changed";
+                if (type.equals("Switch")) {
+                    String min = p.getBrick_function().getFunction().getMin_value();
+                    String max = p.getBrick_function().getFunction().getMax_value();
+                    if (value.equals(max)) {
+                        generated_when = generated_when + " from " + min + " to " + max;
+                        generated_if = generated_if + openhab_name + ".state" + operator + value;
+                    } else if (value.equals(min)) {
+                        generated_when = generated_when + " from " + max + " to " + min;
+                        generated_if = generated_if + openhab_name + ".state" + operator + value;
+                    } else if (value.equals("Switch")) {
+                        generated_if = generated_if + openhab_name + ".state" + operator + "(" + min + "||" + max + ")";
+                    }
+                } else {
+                    generated_if = generated_if + openhab_name + ".state" + operator + value;
+                }
+
+            }
         }
+        generated_if = generated_if + ")";
+        generated_then = generated_then + "\nthen\n";
+        for (Action a : actions) {
+            if (firstAction) {
+                firstAction = false;
+                generated_then = generated_then + "\t" + generated_if + "{";
+            }
+
+            String type = a.getBrick_function().getFunction().getType().getName();
+            String value = a.getValue();
+            String openhab_name = a.getBrick_function().getOpenhab_name();
+            boolean action_generated = false;
+            if (type.equals("Switch")) {
+                if (value.equals("Switch")) {
+                    String min = a.getBrick_function().getFunction().getMin_value();
+                    String max = a.getBrick_function().getFunction().getMax_value();
+                    generated_then = generated_then + "\n\t\tif(" + openhab_name + ".state==" + min + "){" + openhab_name + ".sendCommand(" + max + ")}else{" + openhab_name + ".sendCommand(" + min + ")};";
+                    action_generated = true;
+                }
+            }
+            if (!action_generated) {
+                generated_then = generated_then + "\n\t\t" + openhab_name + ".sendComand(" + value + ");";
+            }
+        }
+        generated_then = generated_then + "\n\t}";
+        generated_rule_string = generated_rule_string + generated_when + generated_then+"\n"+"end";
+        return generated_rule_string;
     }
-}
+    public String generateServiceString(){
+        String generated_service_string = "";
+        db = new DatabaseHelper(getApplicationContext());
+
+        ArrayList<Rule> rules_in_service = db.getAllRulesInService(selected_rule.getService().getId());
+
+        for (Rule r : rules_in_service) {
+            generated_service_string = generated_service_string + generateRuleString(r)+"\n\n";
+        }
+
+        return generated_service_string;
+    }
+
+    public void upload_service_file(){
+        final ftpUploaderClient ftpclient;
+        final File rule_file;
+        final String fileName;
+        try {
+
+            fileName = selected_rule.getService().getName()+"_"+selected_rule.getName() +".rules";
+            //fileName = selected_rule.getService().getName()+".rules";
+
+            rule_file = new File(getApplicationContext().getCacheDir(), fileName);
+            FileWriter fw = new FileWriter(rule_file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            String generated_service_string = generateRuleString(selected_rule);
+            //String generated_service_string = generateServiceString();
+            bw.write(generated_service_string);
+            bw.close();
+            ftpclient = new ftpUploaderClient();
+            new Thread(new Runnable() {
+                public void run() {
+                    // host – your FTP address
+                    // username & password – for your secured login
+                    // 21 default gateway for FTP
+                    boolean connectstatus = ftpclient.ftpConnect(getApplicationContext());
+                    if(connectstatus) {
+                        boolean uploadstatus = ftpclient.ftpUpload(rule_file, fileName);
+                        if (uploadstatus){
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    AlertDialog alertDialog = new AlertDialog.Builder(EditRule.this).create();
+                                    alertDialog.setTitle("Upload erfolgreich");
+                                    alertDialog.setMessage("Service wurde erfolgreich hochgeladen");
+                                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                    alertDialog.show();
+                                }
+                            });
+                            ftpclient.ftpDisconnect();
+                        }
+                    }else {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                AlertDialog alertDialog = new AlertDialog.Builder(EditRule.this).create();
+                                alertDialog.setTitle("Verbindung konnte nicht hergestellt werden");
+                                alertDialog.setMessage("WLAN-Verbindung oder Server-Einstellungen überprüfen");
+                                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                alertDialog.show();
+                            }
+                        });
+                    }
+
+                }
+            }).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    }

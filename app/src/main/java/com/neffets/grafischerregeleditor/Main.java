@@ -124,7 +124,7 @@ public class Main extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), EditRule.class);
                         intent.putExtra("Rule", selected_rule);
                         startActivity(intent);
-                        Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),text,Toast.LENGTH_SHORT).show();
                     }
                 })
                 .create();

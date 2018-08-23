@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.neffets.grafischerregeleditor">
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,10 +26,6 @@
             android:parentActivityName=".Main"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".ShowRule"
-            android:parentActivityName=".Main"
-            android:screenOrientation="landscape"
-            />
     </application>
 
 </manifest>

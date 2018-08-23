@@ -8,14 +8,13 @@ public class MyDbContentFiller {
     }
 
     public void FillServicesAndRules() {
+        this.db.deleteAllRules();
         this.db.deleteAllServices();
         Service ser1 = this.db.addService(new Service("Arbeitsweg"));
-        Service ser2 = this.db.addService(new Service("Anwesenheit"));
-        Service ser3 = this.db.addService(new Service("Beleuchtung"));
-
-        this.db.deleteAllRules();
+       /* Service ser2 = this.db.addService(new Service("Anwesenheit"));
+        Service ser3 = this.db.addService(new Service("Beleuchtung"));*/
         Rule rule1 = this.db.addRule(new Rule("Heimweg von der Arbeit", ser1));
-        Rule rule2 = this.db.addRule(new Rule("Zur Arbeit gehen", ser1));
+       /* Rule rule2 = this.db.addRule(new Rule("Zur Arbeit gehen", ser1));
         Rule rule3 = this.db.addRule(new Rule("Heimkommen", ser2));
         Rule rule4 = this.db.addRule(new Rule("Aus dem Haus gehen", ser2));
         Rule rule5 = this.db.addRule(new Rule("Keiner Zuhause", ser2));
@@ -24,7 +23,7 @@ public class MyDbContentFiller {
         Rule rule8 = this.db.addRule(new Rule("Morgens Schlafzimmerlicht", ser3));
         Rule rule9 = this.db.addRule(new Rule("Abend Schlafzimmerlicht", ser3));
         Rule rule10 = this.db.addRule(new Rule("Gardarobenbeleuchtung", ser3));
-        Rule rule11 = this.db.addRule(new Rule("Gartenlampe", ser3));
+        Rule rule11 = this.db.addRule(new Rule("Gartenlampe", ser3));*/
     }
     public void FillBackend(){
         this.db.deleteAllIcons();
@@ -56,13 +55,14 @@ public class MyDbContentFiller {
         Group group6 = this.db.addGroup(new Group("Haushaltsgerät"));
         Group group7 = this.db.addGroup(new Group("Schalter"));
         Group group8 = this.db.addGroup(new Group("Zeit"));
-        Group group9 = this.db.addGroup(new Group("Webdienste"));
+        //Group group9 = this.db.addGroup(new Group("Webdienste"));
         Group group10 = this.db.addGroup(new Group("Mobile Geräte"));
 
         this.db.deleteAllBricks();
-        Brick brick1 = this.db.addBrick(new Brick("RGB Lampe",group1,icon9));
+        Brick brick1 = this.db.addBrick(new Brick("Smart Light",group1,icon9));
         Brick brick2 = this.db.addBrick(new Brick("Beleuchtung Treppe",group1,icon9));
-        Brick brick3 = this.db.addBrick(new Brick("LED Flashlight",group1,icon14));
+
+        //Brick brick3 = this.db.addBrick(new Brick("LED Flashlight",group1,icon14));
         Brick brick4 = this.db.addBrick(new Brick("Alarm Pieper",group4,icon15));
         Brick brick5 = this.db.addBrick(new Brick("Taster",group7,icon16));
         Brick brick6 = this.db.addBrick(new Brick("Klopf Sensor",group5,icon18));
@@ -72,13 +72,13 @@ public class MyDbContentFiller {
         Brick brick10 = this.db.addBrick(new Brick("Fenster",group5,icon13));
         Brick brick11 = this.db.addBrick(new Brick("Steckdosen Aussen",group2,icon3));
         Brick brick12 = this.db.addBrick(new Brick("Lüfter",group3,icon4));
-        Brick brick13 = this.db.addBrick(new Brick("Kühlschrank",group6,icon6));
+       // Brick brick13 = this.db.addBrick(new Brick("Kühlschrank",group6,icon6));
         Brick brick14 = this.db.addBrick(new Brick("Herzschlag",group5,icon7));
         Brick brick15 = this.db.addBrick(new Brick("Uhr",group8,icon1));
         Brick brick16 = this.db.addBrick(new Brick("Smartphone",group10,icon10));
         Brick brick17 = this.db.addBrick(new Brick("Laptop",group10,icon8));
         Brick brick18 = this.db.addBrick(new Brick("Tablet",group10,icon11));
-        //Brick brick19 = this.db.addBrick(new Brick("Wetter Service",group9,icon2));
+        Brick brick19 = this.db.addBrick(new Brick("Beleuchtung Aussen",group1,icon9));
 
         this.db.deleteAllOperators();
         Operator operator1 = this.db.addOperator(new Operator("Gleich","=="));
@@ -94,42 +94,43 @@ public class MyDbContentFiller {
         Type type5 = this.db.addType(new Type("Value"));
 
         this.db.deleteAllFunctions();
-        Function function1 = this.db.addFunction(new Function("Power",type4,"Aus","An"));
-        Function function2 = this.db.addFunction(new Function("Signal",type4,"Nein","Ja"));
+        Function function1 = this.db.addFunction(new Function("Power",type4,"OFF","ON"));
+        Function function2 = this.db.addFunction(new Function("Signal",type4,"OFF","ON"));
         Function function3 = this.db.addFunction(new Function("Farbe",type2,"",""));
         Function function4 = this.db.addFunction(new Function("Farb-Temperatur",type3,"0","100"));
         Function function5 = this.db.addFunction(new Function("Helligkeit",type3,"0","100"));
         Function function6 = this.db.addFunction(new Function("Temperatur",type3,"-20","60"));
-        Function function7 = this.db.addFunction(new Function("Geschwindigkeit",type3,"0","100"));
-        Function function8 = this.db.addFunction(new Function("Lautstärke",type3,"0","100"));
+        //Function function7 = this.db.addFunction(new Function("Geschwindigkeit",type3,"0","100"));
+        //Function function8 = this.db.addFunction(new Function("Lautstärke",type3,"0","100"));
         Function function9 = this.db.addFunction(new Function("Uhrzeit",type1,"",""));
         Function function10 = this.db.addFunction(new Function("Puls ",type3,"0","250"));
-        Function function11 = this.db.addFunction(new Function("Zustand",type4,"Geschlossen","Geöffnet"));
-        Function function12 = this.db.addFunction(new Function("Verbindung",type4,"Nicht verbunden","Verbunden"));
+        Function function11 = this.db.addFunction(new Function("Zustand",type4,"CLOSED","OPEN"));
+        Function function12 = this.db.addFunction(new Function("Verbindung",type4,"OFF","ON"));
         this.db.deleteAllBrick_Function();
-        Brick_Function brick_function1 = this.db.addBrick_Function(new Brick_Function(brick1,"Item_Yeelight_color ", function3,false,true));
-        Brick_Function brick_function2 = this.db.addBrick_Function(new Brick_Function(brick1,"Item_Yeelight_switch", function1,true,true));
-        Brick_Function brick_function3 = this.db.addBrick_Function(new Brick_Function(brick1,"Item_Yeelight_brightness ", function5,true,true));
-        Brick_Function brick_function4 = this.db.addBrick_Function(new Brick_Function(brick1,"Item_Yeelight_color_temperature", function4,true,true));
-        Brick_Function brick_function5 = this.db.addBrick_Function(new Brick_Function(brick2,"Item_LED_Stair_Switch", function1,true,true));
-        Brick_Function brick_function6 = this.db.addBrick_Function(new Brick_Function(brick3,"Item_LED_Flashlight_Switch", function1,true,true));
-        Brick_Function brick_function7 = this.db.addBrick_Function(new Brick_Function(brick4,"Item_Alarm_Buzzer_Switch", function1,true,true));
-        Brick_Function brick_function8 = this.db.addBrick_Function(new Brick_Function(brick5,"Item_Button_Signal", function2,true,false));
-        Brick_Function brick_function9 = this.db.addBrick_Function(new Brick_Function(brick6,"Item_Knock_Signal", function2,true,false));
-        Brick_Function brick_function10 = this.db.addBrick_Function(new Brick_Function(brick7,"Item_Roof_State", function11,true,false));
-        Brick_Function brick_function11 = this.db.addBrick_Function(new Brick_Function(brick8,"Item_Temperatur_Signal", function2,true,false));
-        Brick_Function brick_function12 = this.db.addBrick_Function(new Brick_Function(brick8,"Item_Temperatur_Slider", function6,true,false));
-        Brick_Function brick_function13 = this.db.addBrick_Function(new Brick_Function(brick9,"Item_Flame_Signal", function2,true,false));
-        Brick_Function brick_function14 = this.db.addBrick_Function(new Brick_Function(brick10,"Item_Window_Signal", function11,true,false));
-        Brick_Function brick_function15 = this.db.addBrick_Function(new Brick_Function(brick11,"Item_Plug_Outside_Power", function1,true,true));
-        Brick_Function brick_function16 = this.db.addBrick_Function(new Brick_Function(brick12,"Item_Fan_Power", function1,true,true));
-        Brick_Function brick_function17 = this.db.addBrick_Function(new Brick_Function(brick12,"Item_Fan_Speed", function7,true,true));
-        Brick_Function brick_function18 = this.db.addBrick_Function(new Brick_Function(brick13,"Item_Fridge_Power", function1,true,true));
-        Brick_Function brick_function19 = this.db.addBrick_Function(new Brick_Function(brick15,"Item_Time", function9,true,false));
-        Brick_Function brick_function20 = this.db.addBrick_Function(new Brick_Function(brick16,"Item_Smartphone_Connected", function12,true,false));
-        Brick_Function brick_function21 = this.db.addBrick_Function(new Brick_Function(brick17,"Item_Laptop_Connected", function12,true,false));
-        Brick_Function brick_function22 = this.db.addBrick_Function(new Brick_Function(brick18,"Item_Tablet_Connected", function12,true,false));
-        Brick_Function brick_function23 = this.db.addBrick_Function(new Brick_Function(brick14,"Item_Puls_Signal", function10,true,false));
+        Brick_Function brick_function1 = this.db.addBrick_Function(new Brick_Function(brick1,"Yeelight_color", function3,false,true));
+        Brick_Function brick_function2 = this.db.addBrick_Function(new Brick_Function(brick1,"Yeelight_switch", function1,true,true));
+        Brick_Function brick_function3 = this.db.addBrick_Function(new Brick_Function(brick1,"Yeelight_brightness", function5,true,true));
+        Brick_Function brick_function4 = this.db.addBrick_Function(new Brick_Function(brick1,"Yeelight_color_temperature", function4,true,true));
+        Brick_Function brick_function5 = this.db.addBrick_Function(new Brick_Function(brick2,"Treppe", function1,true,true));
+        //Brick_Function brick_function6 = this.db.addBrick_Function(new Brick_Function(brick3,"Flashlight", function1,true,true));
+        Brick_Function brick_function7 = this.db.addBrick_Function(new Brick_Function(brick4,"Alarm", function1,true,true));
+        Brick_Function brick_function8 = this.db.addBrick_Function(new Brick_Function(brick5,"Druckschalter", function2,true,false));
+        Brick_Function brick_function9 = this.db.addBrick_Function(new Brick_Function(brick6,"Klopf", function2,true,false));
+        Brick_Function brick_function10 = this.db.addBrick_Function(new Brick_Function(brick7,"Dach", function11,true,false));
+        Brick_Function brick_function11 = this.db.addBrick_Function(new Brick_Function(brick8,"Thermo", function2,true,false));
+        Brick_Function brick_function12 = this.db.addBrick_Function(new Brick_Function(brick8,"Thermo", function6,true,false));
+        Brick_Function brick_function13 = this.db.addBrick_Function(new Brick_Function(brick9,"Flamme", function2,true,false));
+        Brick_Function brick_function14 = this.db.addBrick_Function(new Brick_Function(brick10,"Fenster", function11,true,false));
+        Brick_Function brick_function15 = this.db.addBrick_Function(new Brick_Function(brick11,"Steckdose", function1,true,true));
+        Brick_Function brick_function16 = this.db.addBrick_Function(new Brick_Function(brick12,"Ventilator", function1,true,true));
+        //Brick_Function brick_function17 = this.db.addBrick_Function(new Brick_Function(brick12,"Ventilator", function7,true,true));
+        //Brick_Function brick_function18 = this.db.addBrick_Function(new Brick_Function(brick13,"Kühlschrank", function1,true,true));
+        Brick_Function brick_function19 = this.db.addBrick_Function(new Brick_Function(brick15,"Time", function9,true,false));
+        Brick_Function brick_function20 = this.db.addBrick_Function(new Brick_Function(brick16,"Presence_Handy", function12,true,false));
+        Brick_Function brick_function21 = this.db.addBrick_Function(new Brick_Function(brick17,"Presence_Laptop", function12,true,false));
+        Brick_Function brick_function22 = this.db.addBrick_Function(new Brick_Function(brick18,"Presence_Tablet", function12,true,false));
+        Brick_Function brick_function24 = this.db.addBrick_Function(new Brick_Function(brick19,"Aussenbeleuchtung", function1,true,true));
+        Brick_Function brick_function23 = this.db.addBrick_Function(new Brick_Function(brick14,"Puls_Signal", function10,true,false));
 
 
     }

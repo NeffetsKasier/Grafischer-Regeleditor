@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.neffets.grafischerregeleditor.db_modell.DatabaseHelper;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -25,13 +27,14 @@ import java.util.regex.Pattern;
 public class DialogSettings extends AppCompatDialogFragment {
 
     //String-Variablen für jeweilige Settings in SharedPreference (valuekey)
-    private static final String KEY_OPENHAB_IP = "openhab_ip", KEY_OPENHAB_USER = "openhab_user", KEY_OPENHAB_PASSWORD = "openhab_password";
+    private static final String KEY_OPENHAB_IP = "openhab_ip", KEY_OPENHAB_USER = "openhab_user", KEY_OPENHAB_PASSWORD = "openhab_password", KEY_OPENHAB_VERZEICHNIS = "openhab_verzeichnis";
 
     //EditText-Variablen für jeweiligen Setting Input
-    private EditText input_openhab_ip, input_openhab_user, input_openhab_password;
+    private EditText input_openhab_ip, input_openhab_user, input_openhab_password, input_openhab_verzeichnis;
 
     //Label-Variablen fur jeweiligen Input
-    private TextInputLayout input_layout_openhab_ip, inputLayout__layout_openhab_user, input_layout_openhab_password;
+    private TextInputLayout input_layout_openhab_ip, inputLayout__layout_openhab_user, input_layout_openhab_password, input_layout_openhab_verzeichnis;
+
 
     //Konstruktor für Settings Dialog
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -44,15 +47,27 @@ public class DialogSettings extends AppCompatDialogFragment {
         //Rendert die Custom View dialog_settings.xml in den Dialog
         View SettingsView = layoutInflater.inflate(R.layout.dialog_settings,null);
 
+        Button deleteEmptyServices = SettingsView.findViewById(R.id.button_delete_services);
+        deleteEmptyServices.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DatabaseHelper db = new DatabaseHelper(getContext());
+                db.deleteEmptyServices();
+                Toast.makeText(getActivity(),R.string.toast_empty_services_deleted,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         //Input-Felder aus der View den EditText Variablen zuweisen
         input_openhab_ip = SettingsView.findViewById(R.id.input_openhab_ip);
         input_openhab_user = SettingsView.findViewById(R.id.input_openhab_user);
         input_openhab_password = SettingsView.findViewById(R.id.input_openhab_password);
+        input_openhab_verzeichnis = SettingsView.findViewById(R.id.input_openhab_verzeichnis);
 
         //Labels für jeweiligen Input aus der View zuweisen
         input_layout_openhab_ip = SettingsView.findViewById(R.id.input_layout_openhab_ip);
         inputLayout__layout_openhab_user = SettingsView.findViewById(R.id.input_layout_openhab_user);
         input_layout_openhab_password = SettingsView.findViewById(R.id.input_layout_openhab_password);
+        input_layout_openhab_verzeichnis = SettingsView.findViewById(R.id.input_layout_openhab_verzeichnis);
 
         // GatewayIP aus SharedPreferences lesen und als Text in Inputfeld der View schreiben
         SharedPreferences sp_openhab_ip = Objects.requireNonNull(getContext()).getSharedPreferences(KEY_OPENHAB_IP, 0);
@@ -71,6 +86,12 @@ public class DialogSettings extends AppCompatDialogFragment {
         input_openhab_password.setText(sp_gatewayPassword.getString(KEY_OPENHAB_PASSWORD, ""));
         //Text Listener hinzufügen, um Errormessages direkt zu entfernen
         input_openhab_password.addTextChangedListener(new InputChangesListener(input_openhab_password));
+
+        // GatewayVerzeichnise aus SharedPreferences lesen und als Text in Inputfeld der View schreiben
+        SharedPreferences sp_gatewayVerzeichnis= getContext().getSharedPreferences(KEY_OPENHAB_VERZEICHNIS, 0);
+        input_openhab_verzeichnis.setText(sp_gatewayVerzeichnis.getString(KEY_OPENHAB_VERZEICHNIS, ""));
+        //Text Listener hinzufügen, um Errormessages direkt zu entfernen
+        input_openhab_verzeichnis.addTextChangedListener(new InputChangesListener(input_openhab_verzeichnis));
 
         // Dialog mit AlertBuilder aufbauen
         settingsBuilder.setView(SettingsView) //Layout Setzen
@@ -184,6 +205,23 @@ public class DialogSettings extends AppCompatDialogFragment {
         return true;
     }
 
+    // Funktion validiert eingegebenes Passwort
+    private boolean validateVerzeichnis(){
+        //Verz aus Textinput lesen
+        String verzeichnis = input_openhab_verzeichnis.getText().toString().trim();
+
+        //Prüfen ob Verz leer oder weniger als 3 Zeichen hat
+        if(verzeichnis.isEmpty()||verzeichnis.length() < 3){
+            input_layout_openhab_verzeichnis.setError(getString(R.string.input_err_openhab_verzeichnis));//Error Nachricht setzen
+            input_openhab_verzeichnis.requestFocus();//Fokus auf Eingabefeld setzen
+            return false;
+        }else {
+            SaveToSharedPrefs(KEY_OPENHAB_VERZEICHNIS,verzeichnis);//Wenn valide in SharedPrefs speichern
+            input_layout_openhab_verzeichnis.setErrorEnabled(false);//Errornachricht entfernen
+        }
+        return true;
+    }
+
     //Funktion speichert Eingabe in SharedPreferences
     private void SaveToSharedPrefs(String valkey, String value){
         //Editor für entsprechendes ValueKey starten
@@ -219,6 +257,9 @@ public class DialogSettings extends AppCompatDialogFragment {
                     break;
                 case R.id.input_openhab_password:
                     validatePassword();
+                    break;
+                case R.id.input_openhab_verzeichnis:
+                    validateVerzeichnis();
                     break;
             }
         }

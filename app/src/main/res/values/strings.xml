@@ -15,13 +15,13 @@
     <string name="toast_hint_input_aborted">Eingabe wurde abgebrochen</string>
     <string name="toast_hint_input_saved">Eingabe wurden gespeichert</string>
     <string name="toast_hint_was_deleted">wurde gelöscht</string>
-
+    <string name="toast_empty_services_deleted">Leere Services wurden gelöscht</string>
     <!--Button Strings-->
     <string name="button_back">Zurück</string>
     <string name="button_next">Weiter</string>
     <string name="button_cancel">Abbrechen</string>
     <string name="button_ok">Ok</string>
-    <string name="button_generate_rule">Regel generieren</string>
+    <string name="button_generate_rule">An Server senden</string>
 
 
     <string name="dialog_title_delete_rule">Regel löschen</string>
@@ -32,9 +32,13 @@
     <string name="input_openhab_ip">IPv4-Adresse des Gateways</string>
     <string name="input_openhab_user">Anmeldename</string>
     <string name="input_openhab_password">Passwort</string>
+    <string name="input_openhab_verzeichnis">Benutzerverzeichnis</string>
     <string name="input_err_openhab_ip">Gültige IPv4-Adresse des Gateways eingeben (0.0.0.0)</string>
     <string name="input_err_openhab_user">Gültigen Anmeldename für Gateway eingeben (min. 3 Zeichen: {A-Za-z._-})</string>
     <string name="input_err_openhab_password">Gültiges Passwort für Gateway eingeben (min. 3 Zeichen)</string>
+    <string name="input_err_openhab_verzeichnis">Gültiges Benutzerverzeichnis eingeben (min. 3 Zeichen)</string>
+    <string name="leere_services_loeschen">Leere Services löschen</string>
+
 
     <!--Create Rule Strings-->
     <string name="dialog_title_new_rule">Neue Regel erstellen</string>
@@ -69,5 +73,6 @@
     <string name="dialog_select_trigger">Bedingung wählen</string>
     <string name="dialog_hint_no_trigger">Gerät kann leider nicht als Bedingung verwendet werden</string>
     <string name="dialog_select_operator">Operator wählen</string>
+
 </resources>
 

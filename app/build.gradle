@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.neffets.grafischerregeleditor"
-        minSdkVersion 22
+        minSdkVersion 23
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation 'junit:junit:4.12'
@@ -31,4 +31,5 @@ dependencies {
     api 'net.steamcrafted:materialiconlib:1.1.4'
     api 'com.android.support:design:27.1.1'
     implementation 'org.jetbrains:annotations-java5:15.0'
+    implementation 'org.kie.modules:org-apache-commons-net:6.5.0.Final'
 }
